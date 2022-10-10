@@ -1,8 +1,7 @@
-
 function gen() {
-    return fetch("https://type.fit/api/quotes")
-    .then(resp => resp.json())
-    .then((resp)=>{
+    fetch("https://type.fit/api/quotes")
+.then(resp => resp.json())
+.then((resp)=>{
     let ranInt = Math.floor(Math.random() * (resp.length-1))
     let text = document.querySelector(".text")
     let auth = document.querySelector(".author")
@@ -12,7 +11,7 @@ function gen() {
         auth.textContent = `-${quoteObj.author}`
     }
 })}
-async function img() { 
+function img() {
     let con = document.querySelector(".container");
     con.src = ``
     let imgArr = [
@@ -31,17 +30,18 @@ async function img() {
         "https://source.unsplash.com/random?science"
     ]
     let ranInt = Math.floor(Math.random() * (imgArr.length-1))
-    let set = () => {return new Promise((y,n) => {
-        con.style.background = `url(${imgArr[ranInt]})`
-        y()
-    })}
-    await set()
+    
+    setTimeout(() => {
+        con.style.background =  `url(${imgArr[ranInt]})`
+        // console.log(ranInt)
+    }, 100);
 }
-
-   
-
+//https://source.unsplash.com/random
 document.querySelector("#button").onclick = () => {
-    promiseFullFiledChecker()
+    img();
+    gen();
+    shot();
+    
 }
 function shot() {
     let a = document.querySelector("#download")
@@ -49,14 +49,13 @@ function shot() {
     domtoimage.toPng(con)
  .then((dataUrl) => {
     a.setAttribute("href", dataUrl)
+   
  })
+ 
+ 
 }
-function promiseFullFiledChecker() {
-    let stagea = gen()
-    let stageb = img()
-    let allSet = Promise.all([stagea, stageb])
-    allSet.then(() => {
-        shot()
-    })
-    }
-    promiseFullFiledChecker()
+img();
+gen();
+setTimeout(() => {
+    shot();
+}, 1000);
